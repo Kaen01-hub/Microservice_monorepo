@@ -6,7 +6,7 @@ import { User } from "@prisma/client";
 
 @Injectable()
 export class UserRepository {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prismaService: PrismaService) { }
 
   async create(createUser: CreateUserInput): Promise<User> {
     try {
@@ -45,6 +45,19 @@ export class UserRepository {
         throw new NotFoundException("User not found");
       }
 
+      return user;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
+  }
+
+  async findWithEmail(email: string): Promise<User> {
+    try {
+      const user = await this.prismaService.user.findFirst({
+        where: {
+          email: email
+        }
+      });
       return user;
     } catch (error) {
       throw new BadRequestException(error);

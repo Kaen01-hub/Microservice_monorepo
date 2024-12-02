@@ -28,10 +28,13 @@ import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin
         plugins: [ApolloServerPluginLandingPageLocalDefault()],
         formatError(formattedError, error: any) {
           const graphQLFormattedError = {
-            message: error.extensions?.exception?.response?.message || error.message,
+            message: error?.extensions?.originalError?.message || error.extensions?.exception?.response?.message || error.message,
             code: error.extensions?.code || "SERVER_ERROR",
             name: error.extensions?.exception?.name || error.name,
           };
+          console.log(error.extensions.originalError);
+
+
           return graphQLFormattedError;
         },
       },
@@ -40,4 +43,4 @@ import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin
   controllers: [],
   providers: [],
 })
-export class ApiGatewayModule {}
+export class ApiGatewayModule { }

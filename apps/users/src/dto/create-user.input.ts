@@ -1,6 +1,6 @@
 import { InputType, Int, Field, PartialType } from "@nestjs/graphql";
 import { UserModel } from "../entities/user.entity";
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsString, IsStrongPassword } from "class-validator";
 
 @InputType()
 export class CreateUserInput extends PartialType(UserModel) {
@@ -11,4 +11,9 @@ export class CreateUserInput extends PartialType(UserModel) {
   @Field({ nullable: true })
   @IsNotEmpty()
   name?: string;
+
+  @Field()
+  @IsNotEmpty()
+  @IsStrongPassword()
+  password?: string;
 }

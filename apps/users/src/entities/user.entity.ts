@@ -11,4 +11,7 @@ export class UserModel implements User {
 
   @Field()
   name: string;
+
+  @Field()
+  password: string;
 }

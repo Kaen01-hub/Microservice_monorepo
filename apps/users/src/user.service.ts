@@ -6,12 +6,19 @@ import { User } from "@prisma/client";
 import { GraphQLError } from "graphql";
 import { HttpException } from "libs/common/exceptions/HttpException";
 import { BadRequestException } from "libs/common/exceptions/BadRequest.exception";
+import { NotFoundException } from "libs/common/exceptions/NotFoumdException";
 
 @Injectable()
 export class UserService {
-  constructor(private userRepo: UserRepository) {}
+  constructor(private userRepo: UserRepository) { }
 
   async create(createUserInput: CreateUserInput): Promise<User> {
+    const userIsExit = await this.userRepo.findWithEmail(createUserInput.email);
+
+    if (userIsExit) {
+      throw new NotFoundException('User already exit!');
+    }
+
     const newUser = await this.userRepo.create(createUserInput);
 
     if (!newUser) {
