@@ -7,6 +7,7 @@ import { GraphQLError } from "graphql";
 import { HttpException } from "libs/common/exceptions/HttpException";
 import { BadRequestException } from "libs/common/exceptions/BadRequest.exception";
 import { NotFoundException } from "libs/common/exceptions/NotFoumdException";
+import { UserModel } from "./entities/user.entity";
 
 @Injectable()
 export class UserService {
@@ -28,7 +29,7 @@ export class UserService {
     return newUser;
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<UserModel[]> {
     return this.userRepo.findAll();
   }
 

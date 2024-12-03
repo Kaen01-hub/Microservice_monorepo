@@ -12,7 +12,7 @@ export class CreateUserInput extends PartialType(UserModel) {
   @IsNotEmpty()
   name?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @IsNotEmpty()
   @IsStrongPassword()
   password?: string;

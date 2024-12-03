@@ -14,6 +14,7 @@ export class UserRepository {
         data: {
           email: createUser.email,
           name: createUser.name,
+          password: createUser.password
         },
       });
 
@@ -23,7 +24,7 @@ export class UserRepository {
     }
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<UserModel[]> {
     try {
       const users = await this.prismaService.user.findMany();
 

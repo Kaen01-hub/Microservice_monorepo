@@ -3,6 +3,7 @@ import { UserModel } from "./entities/user.entity";
 import { CreateUserInput } from "./dto/create-user.input";
 import { UpdateUserInput } from "./dto/update-user.input";
 import { UserService } from "./user.service";
+import { ClassSerializerInterceptor, UseInterceptors } from "@nestjs/common";
 
 @Resolver(() => UserModel)
 export class UserResolver {
