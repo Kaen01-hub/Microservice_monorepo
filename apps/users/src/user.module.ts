@@ -6,6 +6,8 @@ import { ApolloFederationDriver, ApolloFederationDriverConfig } from "@nestjs/ap
 import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
 import { DbModule } from "@app/db";
 import { UserRepository } from "./user.repository";
+import { UserModel } from "./entities/user.entity";
+import { TaskModel } from "apps/tasks/src/entities/task.entity";
 
 @Module({
   imports: [
@@ -14,11 +16,10 @@ import { UserRepository } from "./user.repository";
       autoSchemaFile: {
         federation: 2,
       },
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+
     }),
     DbModule,
   ],
   providers: [UserResolver, UserService, UserRepository],
 })
-export class UserModule {}
+export class UserModule { }

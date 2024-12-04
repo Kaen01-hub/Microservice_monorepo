@@ -21,7 +21,6 @@ import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin
             },
           ],
         }),
-        validateSupergraph: true,
       },
       server: {
         playground: false,
@@ -33,8 +32,6 @@ import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin
             name: error.extensions?.exception?.name || error.name,
           };
           console.log(error.extensions.originalError);
-
-
           return graphQLFormattedError;
         },
       },

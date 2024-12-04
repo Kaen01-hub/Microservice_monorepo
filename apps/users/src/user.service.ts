@@ -8,6 +8,7 @@ import { HttpException } from "libs/common/exceptions/HttpException";
 import { BadRequestException } from "libs/common/exceptions/BadRequest.exception";
 import { NotFoundException } from "libs/common/exceptions/NotFoumdException";
 import { UserModel } from "./entities/user.entity";
+import { TaskModel } from "apps/tasks/src/entities/task.entity";
 
 @Injectable()
 export class UserService {
@@ -35,6 +36,11 @@ export class UserService {
 
   async findOne(id: number) {
     return this.userRepo.findWithId(id);
+  }
+
+  async getTasks(userId: number): Promise<TaskModel[]> {
+    const tasks = await this.userRepo.getTasks(userId);
+    return tasks
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {

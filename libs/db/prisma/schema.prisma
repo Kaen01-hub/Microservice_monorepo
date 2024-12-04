@@ -24,7 +24,7 @@ model Task {
   id        Int      @id @default(autoincrement())
   title     String
   content   String?
-  createdAt DateTime
+  createdAt DateTime @default(now())  // Automatically sets the current time when a new Task is created
   published Boolean? @default(false)
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?

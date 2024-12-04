@@ -1,9 +1,10 @@
-import { Resolver, Query, Mutation, Args, Int } from "@nestjs/graphql";
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, ResolveReference } from "@nestjs/graphql";
 import { UserModel } from "./entities/user.entity";
 import { CreateUserInput } from "./dto/create-user.input";
 import { UpdateUserInput } from "./dto/update-user.input";
 import { UserService } from "./user.service";
-import { ClassSerializerInterceptor, UseInterceptors } from "@nestjs/common";
+import { TaskModel } from "apps/tasks/src/entities/task.entity";
+import { User } from "@prisma/client";
 
 @Resolver(() => UserModel)
 export class UserResolver {

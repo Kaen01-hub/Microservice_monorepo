@@ -1,15 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTaskInput } from './dto/create-task.input';
 import { UpdateTaskInput } from './dto/update-task.input';
+import { TaskRepository } from './task.repository';
+import { TaskModel } from './entities/task.entity';
+import { BadRequestException } from 'libs/common/exceptions/BadRequest.exception';
+import { NullableList } from '@nestjs/graphql';
 
 @Injectable()
 export class TasksService {
-  create(createTaskInput: CreateTaskInput) {
-    return 'This action adds a new task';
+  constructor(private taskRepo: TaskRepository) { }
+
+  async create(createTaskInput: CreateTaskInput): Promise<TaskModel> {
+    const task = await this.taskRepo.create(createTaskInput);
+    if (!task) throw new BadRequestException('Task create faile!!');
+
+    return task
   }
 
-  findAll() {
-    return `This action returns all tasks`;
+  async findAll(): Promise<TaskModel[]> {
+    const tasks = await this.taskRepo.findAll();
+    return tasks;
+  }
+
+  async findTaskUser(userId: number): Promise<TaskModel[]> {
+    const tasksOfUser = await this.taskRepo.findTaskUser(userId)
+
+    return tasksOfUser;
   }
 
   findOne(id: number) {

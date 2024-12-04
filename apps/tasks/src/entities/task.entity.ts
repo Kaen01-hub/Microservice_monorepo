@@ -1,23 +1,25 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { EStatus } from './EStatus';
+import { Directive, Field, InputType, Int, ObjectType } from "@nestjs/graphql";
+import { Task } from "@prisma/client";  // Assuming Task is defined in Prisma
 
 @ObjectType()
-export class Task {
-  @Field(() => Int, { description: "Example field (placeholder)" })
+export class TaskModel implements Task {
+
+  @Field(() => Int)
   id: number;
 
   @Field()
   title: string;
 
-  @Field()
-  description: string;
+  @Field({ nullable: true })
+  content: string;
 
-  @Field(() => String) // Change to Date if necessary
+  @Field()
   createdAt: Date;
 
-  @Field()
-  duration: string;
+  @Field({ nullable: true })
+  published: boolean;
 
-  @Field()
-  status: EStatus;
+  @Field({ nullable: true })
+  authorId: number;
+
 }

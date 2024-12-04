@@ -1,18 +1,19 @@
-import { ObjectType, Field, Int, PartialType } from "@nestjs/graphql";
-import { User } from "@prisma/client";
-import { Exclude } from "class-transformer";
+import { ObjectType, Field, Directive, ID } from '@nestjs/graphql';
+import { TaskModel } from 'apps/tasks/src/entities/task.entity';
 
 @ObjectType()
-export class UserModel implements User {
-  @Field(() => Int, { description: "Example field (placeholder)" })
+export class UserModel {
+  @Field(() => ID)
   id: number;
 
   @Field()
   email: string;
 
-  @Field()
+  @Field({ nullable: true })
   name: string;
 
-  @Field()
+  @Field({ nullable: true })
   password: string;
+
 }
+

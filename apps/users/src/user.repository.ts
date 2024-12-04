@@ -3,6 +3,7 @@ import { BadRequestException, HttpStatus, Injectable, NotFoundException } from "
 import { UserModel } from "./entities/user.entity";
 import { CreateUserInput } from "./dto/create-user.input";
 import { User } from "@prisma/client";
+import { TaskModel } from "apps/tasks/src/entities/task.entity";
 
 @Injectable()
 export class UserRepository {
@@ -16,6 +17,7 @@ export class UserRepository {
           name: createUser.name,
           password: createUser.password
         },
+
       });
 
       return user;
@@ -27,8 +29,19 @@ export class UserRepository {
   async findAll(): Promise<UserModel[]> {
     try {
       const users = await this.prismaService.user.findMany();
+      const usersData: any = [];
 
-      return users;
+      for (let user of users) {
+
+        const tasks = await this.prismaService.task.findMany({
+          where: {
+            authorId: user.id
+          }
+        })
+        usersData.push({ ...user, tasks: tasks })
+      }
+
+      return usersData;
     } catch (error) {
       throw new BadRequestException(error);
     }
@@ -40,6 +53,9 @@ export class UserRepository {
         where: {
           id: id,
         },
+        include: {
+          tasks: true
+        }
       });
 
       if (!user) {
@@ -62,6 +78,19 @@ export class UserRepository {
       return user;
     } catch (error) {
       throw new BadRequestException(error);
+    }
+  }
+
+  async getTasks(id: number): Promise<TaskModel[]> {
+    try {
+      const tasks = await this.prismaService.task.findMany({
+        where: {
+          authorId: id
+        }
+      })
+      return tasks
+    } catch (error) {
+      throw new BadRequestException('Get tasks had error')
     }
   }
 }

@@ -3,8 +3,9 @@ import { TasksService } from "./tasks.service";
 import { TasksResolver } from "./tasks.resolver";
 import { GraphQLModule } from "@nestjs/graphql";
 import { ApolloFederationDriver, ApolloFederationDriverConfig } from "@nestjs/apollo";
-import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
 import { DbModule } from "@app/db";
+import { TaskRepository } from "./task.repository";
+
 
 @Module({
   imports: [
@@ -13,11 +14,9 @@ import { DbModule } from "@app/db";
       autoSchemaFile: {
         federation: 2,
       },
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
     }),
     DbModule,
   ],
-  providers: [TasksResolver, TasksService],
+  providers: [TasksResolver, TasksService, TaskRepository],
 })
-export class TasksModule {}
+export class TasksModule { }

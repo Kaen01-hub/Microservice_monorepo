@@ -44,6 +44,9 @@ importers:
       class-validator:
         specifier: ^0.14.1
         version: 0.14.1
+      default:
+        specifier: link:@apollo/server/plugin/landingPage/default
+        version: link:@apollo/server/plugin/landingPage/default
       graphql:
         specifier: ^16.9.0
         version: 16.9.0
